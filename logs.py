@@ -3,6 +3,7 @@ from discord.ext import commands, tasks
 import psutil
 import time
 import os
+import platform
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -22,7 +23,7 @@ def get_status_embed():
         ("RAM%", f"{psutil.virtual_memory().percent}%"),
         ("Disk%", f"{psutil.disk_usage('/').percent}%"),
         ("Ping", f"{round(bot.latency * 1000)}ms"),
-        ("OS", psutil.sys_platform())
+        ("OS", platform.system())
     ]
     
     for name, value in fields:
