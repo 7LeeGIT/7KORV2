@@ -68,9 +68,9 @@ async def status(ctx):
     embed = await get_status_embed()
     await ctx.send(embed=embed)
 
-# Get the token from the environment variable
+
 token = os.getenv('DISCORD_BOT_TOKEN')
-# Check if the token is available
+
 if token is None:
     print("Erreur fichier .env")
 else:
