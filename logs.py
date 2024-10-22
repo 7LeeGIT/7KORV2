@@ -66,7 +66,7 @@ class StatusManager:
         embed.set_author(name=self.bot.user.name, icon_url=self.bot.user.avatar.url if self.bot.user.avatar else None)
         embed.set_footer(text="Mise à jour toutes les 15 minutes")
         embed.timestamp = discord.utils.utcnow()
-        embed.set_thumbnail(url="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Tux.svg/640px-Tux.svg.png")
+        embed.set_thumbnail(url="https://based.so/punks/563.gif")
         
         return embed
 

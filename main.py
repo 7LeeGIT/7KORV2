@@ -1,19 +1,21 @@
+# main.py
 import discord
 from discord.ext import commands
 import os
 import sys
 from dotenv import load_dotenv
 import logs
+import embed  # Ajout du module embed
 
 # Chargement des variables d'environnement
 load_dotenv()
 
 # Vérification des variables d'environnement requises
 required_env_vars = [
-    'DISCORD_BOT_TOKEN', 
-    'LOGS_CHANNEL_ID', 
-    'GUILD_ID', 
-    'AUTHORIZED_KOR', 
+    'DISCORD_BOT_TOKEN',
+    'LOGS_CHANNEL_ID',
+    'GUILD_ID',
+    'AUTHORIZED_KOR',
     'AUTHORIZED_LEE'
 ]
 
@@ -37,9 +39,21 @@ async def on_ready():
         type=discord.ActivityType.watching,
         name="7KOR mourir..."
     ))
-    
+   
     # Initialisation du module de logs une fois que le bot est prêt
     await logs.setup(bot)
+
+@bot.event
+async def on_message(message):
+    # Ignore les messages du bot
+    if message.author.bot:
+        return
+        
+    # Vérifie et corrige les liens sociaux
+    await embed.fix_social_links(message)
+    
+    # Traite les commandes normalement
+    await bot.process_commands(message)
 
 if __name__ == "__main__":
     token = os.getenv('DISCORD_BOT_TOKEN')
