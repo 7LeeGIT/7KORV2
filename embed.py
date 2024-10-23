@@ -30,4 +30,4 @@ async def fix_social_links(message):
             await message.channel.send(content)
             
     except Exception as e:
-        print(f"Erreur dans fix_social_link: {e}")
+        print(f"Erreur dans fix_social_l: {e}")
