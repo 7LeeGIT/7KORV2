@@ -36,8 +36,8 @@ async def on_ready():
     """Événement déclenché quand le bot est prêt"""
     print(f'{bot.user} est connecté')
     await bot.change_presence(activity=discord.Activity(
-        type=discord.ActivityType.watching,
-        name="7KOR mourir..."
+        type=discord.ActivityType.listening,
+        name="Subwoofer Lullaby - C418"
     ))
    
     # Initialisation du module de logs une fois que le bot est prêt
