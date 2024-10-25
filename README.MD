@@ -2,7 +2,7 @@
 
 [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org)
 [![Discord.py](https://img.shields.io/badge/Discord.py-2.0+-blue.svg)](https://discordpy.readthedocs.io/en/stable/)
-[![Status](https://img.shields.io/badge/Status-Active-success.svg)](https://github.com/your-username/7kor-discord-bot)
+[![Status](https://img.shields.io/badge/Status-Active-success.svg)](https://github.com/7LeeGIT)
 [![Discord Server](https://img.shields.io/badge/Discord-Join%20Server-7289DA?logo=discord&logoColor=white)](https://discord.gg/PQaReaqK8Q)
 
 ## ✨ Features
@@ -44,8 +44,8 @@
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/7kor-discord-bot.git
-   cd 7kor-discord-bot
+   git clone https://github.com/7LeeGIT/7KORV2.git
+   cd 7KORV2
    ```
 
 2. Create a `.env` file based on the provided `.env.example`:
