@@ -3,7 +3,7 @@
 [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org)
 [![Discord.py](https://img.shields.io/badge/Discord.py-2.0+-blue.svg)](https://discordpy.readthedocs.io/en/stable/)
 [![Status](https://img.shields.io/badge/Status-Active-success.svg)](https://github.com/your-username/7kor-discord-bot)
-[![Discord Server](https://discord.gg/PQaReaqK8Q)
+[![Discord Server](https://discord.gg/PQaReaqK8Q)]
 
 ## ✨ Features
 
