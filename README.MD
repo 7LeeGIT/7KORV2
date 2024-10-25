@@ -3,8 +3,7 @@
 [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org)
 [![Discord.py](https://img.shields.io/badge/Discord.py-2.0+-blue.svg)](https://discordpy.readthedocs.io/en/stable/)
 [![Status](https://img.shields.io/badge/Status-Active-success.svg)](https://github.com/your-username/7kor-discord-bot)
-[![GitHub License](https://img.shields.io/github/license/your-username/7kor-discord-bot)](https://github.com/your-username/7kor-discord-bot/blob/main/LICENSE)
-[![Discord Server](https://img.shields.io/discord/YOUR_SERVER_ID?color=7289da&logo=discord&logoColor=white)](https://discord.gg/your-invite-link)
+[![Discord Server](https://discord.gg/PQaReaqK8Q)
 
 ## ✨ Features
 
