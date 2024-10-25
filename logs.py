@@ -57,7 +57,7 @@ class StatusManager:
             ("📡 Ping", f"{round(self.bot.latency * 1000)}ms"),
             ("💻 CPU Usage", f"{psutil.cpu_percent()}%"),
             ("📝 RAM Usage", f"{psutil.virtual_memory().percent}%"),
-            ("🖥️ OS7", f"{platform.system()} {platform.release()}")
+            ("🖥️ OS", f"{platform.system()} {platform.release()}")
         ]
         
         for name, value in main_stats:
