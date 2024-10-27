@@ -18,7 +18,7 @@ async def fix_social_links(message):
         if re.search(instagram_pattern, content):
             content = re.sub(instagram_pattern, r'https://ddinstagram.com/p/\1', content)
         
-        # Fix TikTok 
+        # Fix TikTok
         if re.search(tiktok_pattern, content):
             tiktok_matches = re.finditer(tiktok_pattern, content)
             for match in tiktok_matches:
@@ -28,7 +28,9 @@ async def fix_social_links(message):
         
         if content != message.content:
             await message.delete()
-            await message.channel.send(content)
+            # Utilise la mention de l'utilisateur avec message.author.mention
+            formatted_message = f"Envoyé par {message.author.mention} :\n{content}"
+            await message.channel.send(formatted_message)
             
     except Exception as e:
         print(f"Erreur dans fix_social_links: {e}")
