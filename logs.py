@@ -64,13 +64,13 @@ class StatusManager:
             embed.add_field(name=name, value=value, inline=True)
         
         embed.set_author(name=self.bot.user.name, icon_url=self.bot.user.avatar.url if self.bot.user.avatar else None)
-        embed.set_footer(text="Mise à jour toutes les 45 minutes")
+        embed.set_footer(text="Mise à jour toutes les 77 minutes")
         embed.timestamp = discord.utils.utcnow()
         embed.set_thumbnail(url="https://media.discordapp.net/attachments/1040759817385562182/1298551346194284547/Fils.gif?ex=6719f9ae&is=6718a82e&hm=4fb322fd39a3d1c24ac4142f86dbd60cb22619215743f7d08cc4615fd36c7666&=&width=670&height=670")
         
         return embed
 
-    @tasks.loop(minutes=46)
+    @tasks.loop(minutes=45)
     async def update_status(self):
         """Met à jour le message de statut toutes les 45 minutes"""
         try:
