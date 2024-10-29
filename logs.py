@@ -27,14 +27,6 @@ class ControlButtons(discord.ui.View):
             return False
         return True
 
-    @discord.ui.button(label="🔄 Redémarrer", style=discord.ButtonStyle.primary, custom_id="restart_bot")
-    async def restart_button(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.send_message(
-            f"🔄 Redémarrage du bot initié par {interaction.user.display_name}...", 
-            ephemeral=True
-        )
-        os.execv(sys.executable, ['python'] + sys.argv)
-
 class StatusManager:
     def __init__(self, bot):
         self.bot = bot
@@ -64,15 +56,15 @@ class StatusManager:
             embed.add_field(name=name, value=value, inline=True)
         
         embed.set_author(name=self.bot.user.name, icon_url=self.bot.user.avatar.url if self.bot.user.avatar else None)
-        embed.set_footer(text="Mise à jour toutes les 77 minutes")
+        embed.set_footer(text="Mise à jour toutes les 60 minutes")
         embed.timestamp = discord.utils.utcnow()
         embed.set_thumbnail(url="https://media.discordapp.net/attachments/1040759817385562182/1298551346194284547/Fils.gif?ex=6719f9ae&is=6718a82e&hm=4fb322fd39a3d1c24ac4142f86dbd60cb22619215743f7d08cc4615fd36c7666&=&width=670&height=670")
         
         return embed
 
-    @tasks.loop(minutes=45)
+    @tasks.loop(minutes=60)  # Changé à 60 minutes
     async def update_status(self):
-        """Met à jour le message de statut toutes les 45 minutes"""
+        """Met à jour le message de statut toutes les heures"""
         try:
             channel_id = int(os.getenv('LOGS_CHANNEL_ID'))
             guild = self.bot.get_guild(int(os.getenv('GUILD_ID')))
