@@ -70,7 +70,7 @@ class StatusManager:
         
         return embed
 
-    @tasks.loop(minutes=45)
+    @tasks.loop(minutes=46)
     async def update_status(self):
         """Met à jour le message de statut toutes les 45 minutes"""
         try:
