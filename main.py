@@ -1,41 +1,125 @@
+# main.py
+
 import discord
-from discord.ext import tasks
-from datetime import datetime, time
-import pytz
+
+from discord.ext import commands
+
 import os
 
-class CountdownManager:
-    def __init__(self, bot):
-        self.bot = bot
-        self.target_date = datetime(2024, 12, 22)
-        self.channel_id = int(os.getenv('COUNTDOWN_CHANNEL_ID'))
-        self.daily_time = time(hour=7, minute=7)
-        self.timezone = pytz.timezone('Europe/Paris')
+import sys
+
+from dotenv import load_dotenv
+
+import logs
+
+import embed  # Ajout du module embed
+
+
+
+# Chargement des variables d'environnement
+
+load_dotenv()
+
+
+
+# Vérification des variables d'environnement requises
+
+required_env_vars = [
+
+    'DISCORD_BOT_TOKEN',
+
+    'LOGS_CHANNEL_ID',
+
+    'GUILD_ID',
+
+    'AUTHORIZED_KOR',
+
+    'AUTHORIZED_LEE'
+
+]
+
+
+
+# Vérification des variables d'environnement
+
+missing_vars = [var for var in required_env_vars if not os.getenv(var)]
+
+if missing_vars:
+
+    print(f"Erreur : Variables d'environnement manquantes : {', '.join(missing_vars)}")
+
+    sys.exit(1)
+
+
+
+# Configuration du bot
+
+intents = discord.Intents.default()
+
+intents.message_content = True
+
+intents.members = True
+
+bot = commands.Bot(command_prefix='!', intents=intents)
+
+
+
+@bot.event
+
+async def on_ready():
+
+    """Événement déclenché quand le bot est prêt"""
+
+    print(f'{bot.user} est connecté')
+
+    await bot.change_presence(activity=discord.Activity(
+
+        type=discord.ActivityType.listening,
+
+        name="Subwoofer Lullaby - C418"
+
+    ))
+
+   
+
+    # Initialisation du module de logs une fois que le bot est prêt
+
+    await logs.setup(bot)
+
+
+
+@bot.event
+
+async def on_message(message):
+
+    # Ignore les messages du bot
+
+    if message.author.bot:
+
+        return
+
         
-    def get_days_remaining(self):
-        now = datetime.now(self.timezone)
-        delta = self.target_date - now.replace(tzinfo=None)
-        return max(0, delta.days)
 
-    @tasks.loop(time=time(hour=7, minute=7))
-    async def daily_countdown(self):
-        channel = self.bot.get_channel(self.channel_id)
-        if not channel:
-            return
+    # Vérifie et corrige les liens sociaux
 
-        days_left = self.get_days_remaining()
-        
-        if days_left == 0:
-            message = "🎉 **JOUR J** 🎉\n<@_kor> Le grand jour est arrivé ! Ratio Miaule"
-        else:
-            message = f"⏰ **Countdown**\nPlus que {days_left} jours avant le 22 décembre 2024 !"
-            
-        await channel.send(message)
+    await embed.fix_social_links(message)
 
-    @daily_countdown.before_loop
-    async def before_countdown(self):
-        await self.bot.wait_until_ready()
+    
 
-async def setup(bot):
-    countdown_manager = CountdownManager(bot)
-    countdown_manager.daily_countdown.start()
+    # Traite les commandes normalement
+
+    await bot.process_commands(message)
+
+
+
+if __name__ == "__main__":
+
+    token = os.getenv('DISCORD_BOT_TOKEN')
+
+    if token:
+
+        bot.run(token)
+
+    else:
+
+        print("Erreur : Token Discord non trouvé dans le fichier .env")
