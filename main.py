@@ -26,7 +26,7 @@ class CountdownManager:
         days_left = self.get_days_remaining()
         
         if days_left == 0:
-            message = "🎉 **JOUR J** 🎉\n<@_kor> Le grand jour est arrivé !"
+            message = "🎉 **JOUR J** 🎉\n<@_kor> Le grand jour est arrivé ! Ratio Miaule"
         else:
             message = f"⏰ **Countdown**\nPlus que {days_left} jours avant le 22 décembre 2024 !"
             
