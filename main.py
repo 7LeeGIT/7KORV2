@@ -25,19 +25,32 @@ if missing_vars:
     print(f"Erreur : Variables d'environnement manquantes : {', '.join(missing_vars)}")
     sys.exit(1)
 
-# Configuration du bot
-intents = discord.Intents.default()
-intents.message_content = True
-intents.members = True
+# Configuration du bot avec tous les intents nécessaires
+intents = discord.Intents.all()
 bot = commands.Bot(command_prefix='!', intents=intents)
 
-# Commandes Slash
-@bot.tree.command(name="badge", description="Display KOR badge")
-async def badge(interaction: discord.Interaction):
-    """Simple command that displays KOR"""
-    await interaction.response.send_message("KOR")
+class Bot(commands.Bot):
+    def __init__(self):
+        super().__init__(command_prefix='!', intents=intents)
+        
+    async def setup_hook(self):
+        print("Setting up bot...")
+        await self.tree.sync()
+        print("Slash commands synced!")
 
-# Événements
+bot = Bot()
+
+@bot.tree.command(name="badge", description="Affiche KOR")
+@app_commands.guild_only()
+async def badge(interaction: discord.Interaction):
+    """Commande qui affiche KOR"""
+    try:
+        await interaction.response.send_message("KOR")
+        print(f"Badge command used by {interaction.user}")
+    except Exception as e:
+        print(f"Error in badge command: {e}")
+        await interaction.response.send_message("Une erreur s'est produite.", ephemeral=True)
+
 @bot.event
 async def on_ready():
     """Événement déclenché quand le bot est prêt"""
@@ -51,13 +64,19 @@ async def on_ready():
     
     # Synchroniser les commandes slash
     try:
-        synced = await bot.tree.sync()
-        print(f"Synced {len(synced)} command(s)")
+        print("Starting command sync...")
+        await bot.tree.sync()
+        print("Commands synced successfully!")
     except Exception as e:
         print(f"Failed to sync commands: {e}")
     
     # Initialisation du module de logs
     await logs.setup(bot)
+    
+    # Afficher les guilds où le bot est présent
+    print("Connected to guilds:")
+    for guild in bot.guilds:
+        print(f"- {guild.name} (ID: {guild.id})")
 
 @bot.event
 async def on_message(message):
@@ -72,7 +91,6 @@ async def on_message(message):
     # Traite les commandes normalement
     await bot.process_commands(message)
 
-# Gestion des erreurs
 @bot.event
 async def on_command_error(ctx, error):
     """Gestionnaire d'erreurs global pour les commandes"""
@@ -92,6 +110,7 @@ def main():
         sys.exit(1)
     
     try:
+        print("Starting bot...")
         bot.run(token)
     except discord.LoginFailure:
         print("Erreur : Impossible de se connecter. Vérifiez votre token.")
